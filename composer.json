@@ -1,0 +1,28 @@
+{
+    "name": "zoparga/simple-telegram",
+    "description": "Simple package to send message to Telegram",
+    "license": "MIT",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "zoparga\\SimpleTelegram\\SimpleTelegramServiceProvider"
+            ],
+            "aliases": {
+                "SimpleTelegram": "zoparga\\SimpleTelegram\\Facades\\SimpleTelegramFacade"
+            }
+        }
+
+
+    },
+    "authors": [
+        {
+            "name": "PappZ",
+            "email": "zoltan@pappz.hu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "zoparga\\SimpleTelegram\\": "src/"
+        }
+    }
+}
