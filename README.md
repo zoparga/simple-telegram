@@ -22,5 +22,6 @@ You can call it with the following:
 
 ```
 $text = 'Your text';
-SimpleTelegram::prepare()->text($text)->send();
+zoparga\SimpleTelegram\SimpleTelegram::prepare()->text($text)->send();
+
 ```

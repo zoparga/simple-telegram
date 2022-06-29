@@ -10,12 +10,24 @@ class SimpleTelegram
     public $video;
     public $choosenBot;
     public $chatId;
+    public $documentUrl;
+
+    public $messageType = self::MESSAGE;
+
+    const MESSAGE = 'message';
+    const VIDEO = 'video';
+    const DOCUMENT = 'document';
+
+    const MESSAGE_TYPE = [
+        self::VIDEO => 'sendVideo',
+        self::DOCUMENT => 'sendDocument',
+        self::MESSAGE => 'sendMessage'
+    ];
 
     public static function prepare()
     {
         return new static;
     }
-
 
     public function text($text)
     {
@@ -25,11 +37,17 @@ class SimpleTelegram
         return $this;
     }
 
-
-
     public function video($video)
     {
         $this->video = $video;
+        $this->messageType = self::VIDEO;
+        return $this;
+    }
+
+    public function documentUrl($documentUrl)
+    {
+        $this->documentUrl = $documentUrl;
+        $this->messageType = self::DOCUMENT;
         return $this;
     }
 
@@ -55,23 +73,13 @@ class SimpleTelegram
             $this->choosenBot = config('simpletelegram.bot_id');
         }
 
-
-        if ($this->video) {
-            $messageType = "sendVideo";
-        } else {
-            $messageType = "sendMessage";
-        }
-
-        $telegramUrl = "https://api.telegram.org/bot".$this->choosenBot ."/". $messageType;
-
-
-
-
+        $telegramUrl = "https://api.telegram.org/bot".$this->choosenBot ."/". self::MESSAGE_TYPE[$this->messageType];
 
         $response = Http::post($telegramUrl, [
             'chat_id' => $this->chatId,
             'text' => $this->text,
             'video' => $this->video,
+            'document' => $this->documentUrl,
             'caption' => $this->text,
         ]);
 
